@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using SignalRWebUI.Dtos.CategoryDtos;
 using SignalRWebUI.Dtos.CategoryViewModels;
-using SignalRWebUI.Dtos.ProductDtos;
+using SignalRWebUI.Dtos.AboutDtos;
 using System.Text;
 
 namespace SignalRWebUI.Controllers
@@ -18,7 +18,7 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7186/api/Product/ProductListWithCategory");
+            var responseMessage = await client.GetAsync("https://localhost:44393/api/Product/ProductListWithCategory");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -32,7 +32,7 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> CreateProduct()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7186/api/Category");
+            var responseMessage = await client.GetAsync("https://localhost:44393/api/Category");
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
             List<SelectListItem> values2 = (from x in values
@@ -51,7 +51,7 @@ namespace SignalRWebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createProductDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7186/api/Product", stringContent);
+            var responseMessage = await client.PostAsync("https://localhost:44393/api/Product", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -61,7 +61,7 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"https://localhost:7186/api/Product/{id}");
+            var responseMessage = await client.DeleteAsync($"https://localhost:44393/api/Product/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -73,7 +73,7 @@ namespace SignalRWebUI.Controllers
         {
 
             var client1 = _httpClientFactory.CreateClient();
-            var responseMessage1 = await client1.GetAsync("https://localhost:7186/api/Category");
+            var responseMessage1 = await client1.GetAsync("https://localhost:44393/api/Category");
             var jsonData1 = await responseMessage1.Content.ReadAsStringAsync();
             var values1 = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData1);
             List<SelectListItem> values2 = (from x in values1
@@ -86,7 +86,7 @@ namespace SignalRWebUI.Controllers
 
 
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7186/api/Product/{id}");
+            var responseMessage = await client.GetAsync($"https://localhost:44393/api/Product/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -102,7 +102,7 @@ namespace SignalRWebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateProductDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("https://localhost:7186/api/Product/", stringContent);
+            var responseMessage = await client.PutAsync("https://localhost:44393/api/Product/", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

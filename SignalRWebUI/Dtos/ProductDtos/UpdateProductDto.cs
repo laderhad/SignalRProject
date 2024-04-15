@@ -1,4 +1,4 @@
-﻿namespace SignalRWebUI.Dtos.ProductDtos
+﻿namespace SignalRWebUI.Dtos.AboutDtos
 {
     public class UpdateProductDto
     {
